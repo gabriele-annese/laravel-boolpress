@@ -42,7 +42,6 @@ class PostController extends Controller
        $request->validate($this->validation_rules(), $this->validation_messages() );
         
         $data = $request->all();
-        dump($data);
 
         //new post
         $new_post = new Post();
@@ -50,10 +49,11 @@ class PostController extends Controller
         //slug univoco
         $slug = Str::slug($data['title'], '-');
         $count = 1;
+        $base_slug = $slug;
 
         while(Post::where('slug', $slug)->first()) {
             //gen new slug with count
-            $slug .= '-' . $count;
+            $slug = $base_slug . '-' . $count;
             $count++;
         }
 
@@ -111,7 +111,30 @@ class PostController extends Controller
        $request->validate($this->validation_rules(), $this->validation_messages() );
 
         $data = $request->all();
-        dump($data);
+
+        //UPDATE RECORD
+        $post = Post::find($id);
+        if($data['title'] != $post->title){
+
+            $slug = Str::slug($data['title'], '-');
+            $count = 1;
+            $base_slug = $slug;
+
+            while(Post::where('slug', $slug)->first()) {
+                //gen new slug with count
+                $slug = $base_slug . '-' . $count;
+                $count++;
+            }
+            $data['slug'] = $slug;
+
+        } 
+        else{
+            $data['slug'] = $post->slug;
+        }
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -122,14 +145,18 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }
 
     //validation rules
     private function validation_rules(){
         return [
             'title' => 'required|max:100',
-            'content' => 'required|unique:posts|max:255'
+            'content' => 'required|max:255'
         ];
     }
 
@@ -139,4 +166,5 @@ class PostController extends Controller
             'max' => 'Max :max characters allowed for the :attribute',
         ];
     }
+
 }
