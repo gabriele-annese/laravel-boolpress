@@ -9,12 +9,20 @@
 
             <div class="mb-3">
                 <label for="title" class="form-label">Title*</label>
-                <input class="form-control" type="text" name="title" id="title">
+                <input class="form-control" type="text" name="title" id="title" value="{{old('title')}}">
+                {{--Error--}}
+                @error('title')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="content" class="form-label">Content*</label>
-                <textarea class="form-control" name="content" id="content" rows="6"></textarea>
+                <textarea class="form-control" name="content" id="content" rows="6">{{old('content')}}</textarea>
+                {{--Error--}}
+                @error('content')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div>

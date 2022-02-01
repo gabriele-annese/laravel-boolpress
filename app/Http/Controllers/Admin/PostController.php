@@ -37,6 +37,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|max:100',
+            'content' => 'required|unique:posts|max:255'
+        ], 
+        [
+            'required' => 'The :attribute is a required filed!',
+            'max' => 'Max :max characters allowed for the :attribute',
+        ]);
+
         $data = $request->all();
         dump($data);
     }
