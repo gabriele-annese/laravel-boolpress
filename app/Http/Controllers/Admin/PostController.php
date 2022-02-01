@@ -39,16 +39,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //validation
-        $request->validate([
-            'title' => 'required|max:100',
-            'content' => 'required|unique:posts|max:255'
-        ], 
-        [
-            'required' => 'The :attribute is a required filed!',
-            'max' => 'Max :max characters allowed for the :attribute',
-        ]);
-
+       $request->validate($this->validation_rules(), $this->validation_messages() );
+        
         $data = $request->all();
         dump($data);
 
@@ -116,7 +108,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $request->validate($this->validation_rules(), $this->validation_messages() );
+
+        $data = $request->all();
+        dump($data);
     }
 
     /**
@@ -128,5 +123,20 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //validation rules
+    private function validation_rules(){
+        return [
+            'title' => 'required|max:100',
+            'content' => 'required|unique:posts|max:255'
+        ];
+    }
+
+    private function validation_messages(){
+        return [
+            'required' => 'The :attribute is a required filed!',
+            'max' => 'Max :max characters allowed for the :attribute',
+        ];
     }
 }
