@@ -29,7 +29,9 @@ Route::middleware('auth')
         //admin homepage
         Route::get('/', 'HomeController@index')->name('home');
         //post resource routes
-        Route::resource('/posts', 'PostController');    
+        Route::resource('/posts', 'PostController');  
+        //route categories
+        Route::get('/categories/{id}', 'CategoryController@show')->name('category');  
     });
 
 Route::get('{any?}', function(){
