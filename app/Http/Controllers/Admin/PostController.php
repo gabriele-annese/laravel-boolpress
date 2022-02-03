@@ -169,6 +169,7 @@ class PostController extends Controller
         return [
             'required' => 'The :attribute is a required filed!',
             'max' => 'Max :max characters allowed for the :attribute',
+            'category_id.exists' => 'The selected category does not exists',
         ];
     }
 
