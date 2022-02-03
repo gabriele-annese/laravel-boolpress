@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Post;
+use App\Category;
+
 
 class PostController extends Controller
 {
@@ -28,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-       return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -156,7 +160,8 @@ class PostController extends Controller
     private function validation_rules(){
         return [
             'title' => 'required|max:100',
-            'content' => 'required|max:255'
+            'content' => 'required|max:255',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
