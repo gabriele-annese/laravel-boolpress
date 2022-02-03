@@ -34,6 +34,9 @@
                             <td>{{$post->id}}</td>
                             <td>{{$post->title}}</td>
                             <td>
+                                @if ($post->category) {{$post->category->name}} @else Uncategorized @endif
+                            </td>
+                            <td>
                                 <a class="btn btn-primary" href="{{route('admin.posts.show', $post->slug)}}">SHOW</a>
                             </td>
                             <td>
