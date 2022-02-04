@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 use App\Post;
 use App\Category;
+use App\tag;
 
 
 class PostController extends Controller
@@ -20,7 +21,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        $tags = Tag::all();
+
+        return view('admin.posts.index', compact('posts', 'tags'));
     }
 
     /**
@@ -31,8 +34,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -66,7 +70,11 @@ class PostController extends Controller
         $new_post->fill($data); //<- Fillable
         $new_post->save();
 
-         return redirect()->route('admin.posts.show', $new_post->slug);
+        if(array_key_exists('tags', $data)){
+            $new_post->tags()->attach($data['tags']);
+        }
+
+        return redirect()->route('admin.posts.show', $new_post->slug);
 
     }
 
@@ -96,12 +104,14 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $categories = Category::all();
+        $tags = Tag::all();
+
 
         if(! $post){
             abort (404);
         }
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -139,6 +149,12 @@ class PostController extends Controller
 
         $post->update($data);
 
+        if(array_key_exists('tags', $data)){
+            $post->tags()->sync($data['tags']);
+        }else{
+            $post->tags()->detach();
+        }
+
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -163,6 +179,7 @@ class PostController extends Controller
             'title' => 'required|max:100',
             'content' => 'required|max:255',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ];
     }
 

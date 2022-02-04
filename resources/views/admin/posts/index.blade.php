@@ -59,4 +59,23 @@
             </table>
         @endif
     </div>
+
+    <section class="container mt-5">
+        <h2>Posts by tag</h2>
+        @foreach ($tags as $tag )
+            <h3 class="mt-3">{{$tag->name}}</h3>
+
+            @if ($tag->posts->isEmpty())
+                <p>No post for this tag</p>
+            @endif
+
+            <ul>
+                @foreach ($tag->posts as $post )
+                    <li>
+                        <a href="{{route('admin.posts.show', $post->slug)}}">{{$post->title}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        @endforeach
+    </section>
 @endsection

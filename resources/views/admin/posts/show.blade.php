@@ -23,5 +23,17 @@
             <a class="btn btn-primary" href="{{route('admin.posts.index')}}">Back to archive</a>
         </div>
 
+        <div class="mt-5">
+            @if(! $post->tags->isEmpty()) 
+                <h4>Tags:</h4>
+
+                @foreach ($post->tags as $tag)
+                    <span class=" badge badge-primary">{{$tag->name}}</span>
+                @endforeach
+            @else 
+                <p>No tag for this post</p> 
+            @endif
+        </div>
+
     </div>
 @endsection
