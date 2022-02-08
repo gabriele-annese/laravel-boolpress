@@ -11,7 +11,7 @@
                       {{ post.created_at }}
                   </div>
                   <p class="mb-4">
-                      {{ post.content }}
+                      {{ getExcerpt(post.content, 100) }}
                   </p>
               </article>
           </div>
@@ -46,7 +46,15 @@ export default {
 
                     this.posts = res.data
                 });
-        }
+        },
+
+        getExcerpt(text, maxLength){
+            if(text.length > maxLength){
+                return text.substr(0, maxLength) + '...';
+            }
+            
+            return text;
+        },
     }
 }
 </script>

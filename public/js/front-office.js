@@ -1955,6 +1955,13 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res.data);
         _this.posts = res.data;
       });
+    },
+    getExcerpt: function getExcerpt(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.substr(0, maxLength) + '...';
+      }
+
+      return text;
     }
   }
 });
@@ -3114,7 +3121,7 @@ var render = function () {
                   _c("p", { staticClass: "mb-4" }, [
                     _vm._v(
                       "\n                    " +
-                        _vm._s(post.content) +
+                        _vm._s(_vm.getExcerpt(post.content, 100)) +
                         "\n                "
                     ),
                   ]),
