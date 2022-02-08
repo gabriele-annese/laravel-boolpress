@@ -1935,6 +1935,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
@@ -1962,6 +1963,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return text;
+    },
+    formatData: function formatData(postDate) {
+      console.log(postDate);
+      var date = new Date(postDate);
+      console.log(date);
+      var formatted = new Intl.DateTimeFormat('it-IT').format(date);
+      return formatted;
     }
   }
 });
@@ -3096,7 +3104,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "title" }, [
+  return _c("section", [
     _c("div", { staticClass: "container" }, [
       _c("h1", { staticClass: "my-5" }, [_vm._v("Our Blog")]),
       _vm._v(" "),
@@ -3113,7 +3121,7 @@ var render = function () {
                   _c("div", { staticClass: "mb-4" }, [
                     _vm._v(
                       "\n                    " +
-                        _vm._s(post.created_at) +
+                        _vm._s(_vm.formatData(post.created_at)) +
                         "\n                "
                     ),
                   ]),

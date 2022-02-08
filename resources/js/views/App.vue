@@ -1,6 +1,6 @@
 
 <template>
-  <div class="title">
+  <section>
       <div class="container">
           <h1 class="my-5">Our Blog</h1>
 
@@ -8,7 +8,7 @@
               <article class="mb-4" v-for="post in posts" :key="`post-${post.id}`">
                   <h2>{{ post.title }}</h2>
                   <div class="mb-4">
-                      {{ post.created_at }}
+                      {{  formatData(post.created_at) }}
                   </div>
                   <p class="mb-4">
                       {{ getExcerpt(post.content, 100) }}
@@ -19,8 +19,9 @@
           <div v-else>
               loading please..
           </div>
+
       </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -54,6 +55,14 @@ export default {
             }
             
             return text;
+        },
+        formatData(postDate){
+            console.log(postDate);
+            const date = new Date(postDate);
+            console.log(date);
+
+            const formatted = new Intl.DateTimeFormat('it-IT').format(date);
+            return formatted;
         },
     }
 }
