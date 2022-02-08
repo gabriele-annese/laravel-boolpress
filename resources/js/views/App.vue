@@ -24,7 +24,17 @@
               </button>
 
               <button
-                class="btn btn-primary"
+                class="btn mr-3"
+                :class="pagination.current === i ? 'btn-primary' : 'btn-secondary'"
+                v-for="i in pagination.last"
+                :key="`page-${i}`"
+                @click="getPosts(i)"
+              >
+                {{ i }}
+              </button>
+
+              <button
+                class="btn btn-primary "
                 :disabled="pagination.current === pagination.last "
                 @click="getPosts(pagination.current + 1)"
               >
@@ -33,9 +43,7 @@
 
           </div>
 
-          <div v-else>
-              loading please..
-          </div>
+          <Loader v-else />
 
       </div>
   </section>
@@ -44,10 +52,12 @@
 <script>
 
 import axios from 'axios';
-
+import Loader from '../components/Loader.vue';
 export default {
     name: 'App',
-    components:{},
+    components:{
+        Loader,
+    },
     data(){
         return {
             posts: null,
