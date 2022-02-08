@@ -6,15 +6,34 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
     name: 'App',
-    components:{
+    components:{},
+    data(){
+        return {
+            posts: null,
+        }
+    },
+    created(){
+        this.getPosts()
+    },
+    methods: {
+        getPosts(){
+            axios.get('http://127.0.0.1:8000/api/posts')
+                .then(res => {
+                    console.log(res.data);
 
+                    this.posts = res.data
+                });
+        }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
     .title{
         text-transform: uppercase;
     }
