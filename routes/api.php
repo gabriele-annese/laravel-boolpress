@@ -28,4 +28,6 @@ Route::get('/test', function(){
 Route::namespace('Api')->group( function() {
     //post archive
     Route::get('/posts', 'PostController@index');
+
+    Route::get('/posts/{slug}', 'PostController@show');
 });

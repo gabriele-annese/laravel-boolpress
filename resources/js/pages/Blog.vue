@@ -13,6 +13,9 @@
                   <p class="mb-4">
                       {{ getExcerpt(post.content, 100) }}
                   </p>
+                  <router-link :to="{ name: 'post-detail', params: { slug: post.slug } }">
+                      read hear
+                  </router-link>
               </article>
 
               <button 
@@ -54,7 +57,7 @@
 import axios from 'axios';
 import Loader from '../components/Loader.vue';
 export default {
-    name: 'App',
+    name: 'Blog',
     components:{
         Loader,
     },
@@ -97,7 +100,5 @@ export default {
 </script>
 
 <style lang="scss">
-    .title{
-        text-transform: uppercase;
-    }
+   
 </style>
