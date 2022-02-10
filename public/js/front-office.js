@@ -2238,6 +2238,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts/".concat(this.$route.params.slug)).then(function (res) {
         console.log(res.data);
+
+        if (res.data.not_found) {
+          _this.$router.push({
+            name: 'not-found'
+          });
+        } else {}
+
         _this.post = res.data;
       })["catch"](function (err) {
         return log.error(err);

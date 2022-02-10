@@ -21,6 +21,10 @@ class PostController extends Controller
         //query slug
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
 
+        if(! $post){
+            $post['not_found'] = true;
+        }
+
         //return json data
         return response()->json($post);
     }
