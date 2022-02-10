@@ -46,7 +46,7 @@
 
           </div>
 
-          <Loader v-else />
+          <Loader text="Loading for archives posts..." v-else />
 
       </div>
   </section>

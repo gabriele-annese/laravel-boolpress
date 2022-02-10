@@ -9,20 +9,21 @@
           
           <p>{{post.content}}</p>
       </div>
-      <div v-else>
-          Loading..
-      </div>
+      <Loader text="Loading for post..." v-else />
   </section>
 </template>
 
 <script>
 import axios from 'axios'
 import Tags from '../components/Tags'
+import Loader from '../components/Loader'
+
 
 export default {
     name: 'PostDetail',
     components: {
         Tags,
+        Loader,
     },
     data(){
         return{
