@@ -3,8 +3,9 @@
       <div v-if="post">
           <h1 class="mb-3">{{ post.title }}</h1>
 
-          <h4  class="mb-4">Category: <strong>{{post.category.name}}</strong> </h4>
-
+          <h4 v-if="post.category" class="mb-4">Category: <strong>{{post.category.name}}</strong> </h4>
+          <h4 v-else>Uncategorized</h4>
+          
           <Tags class="mb-5" :list="post.tags" />
           
           <p>{{post.content}}</p>

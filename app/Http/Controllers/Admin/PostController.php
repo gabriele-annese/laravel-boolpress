@@ -190,6 +190,11 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
+        //check cover
+        if($post->cover){
+            Storage::delete($post->cover);
+        }
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);

@@ -3835,10 +3835,12 @@ var render = function () {
                 _vm._v(_vm._s(_vm.post.title)),
               ]),
               _vm._v(" "),
-              _c("h4", { staticClass: "mb-4" }, [
-                _vm._v("Category: "),
-                _c("strong", [_vm._v(_vm._s(_vm.post.category.name))]),
-              ]),
+              _vm.post.category
+                ? _c("h4", { staticClass: "mb-4" }, [
+                    _vm._v("Category: "),
+                    _c("strong", [_vm._v(_vm._s(_vm.post.category.name))]),
+                  ])
+                : _c("h4", [_vm._v("Uncategorized")]),
               _vm._v(" "),
               _c("Tags", {
                 staticClass: "mb-5",
