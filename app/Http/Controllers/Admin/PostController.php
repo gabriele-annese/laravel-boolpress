@@ -55,9 +55,11 @@ class PostController extends Controller
 
         //add img
         if(array_key_exists('cover', $data)){
+
             //save img in storage & path db
             $img_path = Storage::put('posts-covers', $data['cover']);
             $data['cover'] = $img_path;
+
         }
 
         //new post
@@ -138,6 +140,17 @@ class PostController extends Controller
 
         //UPDATE RECORD
         $post = Post::find($id);
+
+        //apdate img post
+        if(array_key_exists ('cover', $data)){
+            //remove if cover already exists
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+
+            $data['cover'] = Storage::put('posts-covers', $data['cover']);
+        }
+
         if($data['title'] != $post->title){
 
             $slug = Str::slug($data['title'], '-');
@@ -189,7 +202,7 @@ class PostController extends Controller
             'content' => 'required|max:255',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
-            'cover' => 'nullable|mimes:jpeg,bmp,png',
+            'cover' => 'nullable|file|mimes:jpeg,bmp,png',
         ];
     }
 

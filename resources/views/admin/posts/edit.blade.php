@@ -4,10 +4,11 @@
     <div class="container">
         <h1 class="mb-5">Edit {{$post->title}}</h1>
 
-        <form action="{{route('admin.posts.update', $post->id)}}" method="POST">
+        <form action="{{route('admin.posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
+            {{--title--}}
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input class="form-control" type="text" name="title" id="title" value="{{old('title', $post->title)}}">
@@ -17,6 +18,7 @@
                 @enderror
             </div>
 
+            {{--Content--}}
             <div class="mb-3">
                 <label for="content" class="form-label">Content</label>
                 <textarea class="form-control" name="content" id="content" rows="6">{{old('content', $post->content)}}</textarea>
@@ -26,6 +28,7 @@
                 @enderror
             </div>
 
+            {{--category--}}
             <div class="mb-3">
                 <label for="category_id">Category</label>
 
@@ -40,6 +43,7 @@
                 </select>
             </div>
 
+            {{--Tag--}}
             <div class="mb-3">
                 @foreach ($tags as $tag)
                     <span class="d-inline-block mr-3">
@@ -61,6 +65,22 @@
                 @error('tags')
                      <div class="text-danger">{{ $message }}</div>  
                 @enderror
+            </div>
+
+            {{--Img--}}
+            <div class="mb-3">
+                <label class="from-label" for="cover">Post Image</label>
+                @if($post->cover)
+                    <figure class="mb-3">
+                        <img width="200"  src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                    </figure>
+                @endif
+                <input class="form-control-file" type="file" name="cover" id="cover">
+
+                @error('cover')
+                     <div class="text-danger">{{ $message }}</div>  
+                @enderror
+                
             </div>
 
             <div>

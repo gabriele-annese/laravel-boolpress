@@ -7,6 +7,7 @@
         <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
+            {{--Title--}}
             <div class="mb-3">
                 <label for="title" class="form-label">Title*</label>
                 <input class="form-control" type="text" name="title" id="title" value="{{old('title')}}">
@@ -16,6 +17,7 @@
                 @enderror
             </div>
 
+            {{---Content--}}
             <div class="mb-3">
                 <label for="content" class="form-label">Content*</label>
                 <textarea class="form-control" name="content" id="content" rows="6">{{old('content')}}</textarea>
@@ -25,6 +27,7 @@
                 @enderror
             </div>
 
+            {{--Category--}}}
             <div class="mb-3">
                 <label for="category_id">Category</label>
 
@@ -44,6 +47,7 @@
 
             </div>
 
+            {{--tags--}}
             <div class="mb-3">
                 @foreach ($tags as $tag)
                     <span class="d-inline-block mr-3">
@@ -64,6 +68,7 @@
                 @enderror
             </div>
 
+            {{--Img--}}
             <div class="mb-3">
                 <label class="from-label" for="cover">Post Image</label>
                 <input class="form-control-file" type="file" name="cover" id="cover">
