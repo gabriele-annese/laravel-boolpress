@@ -56,7 +56,7 @@ class PostController extends Controller
         //add img
         if(array_key_exists('cover', $data)){
             //save img in storage & path db
-            $img_path = Storage::pu('posts-covers', $data['cover']);
+            $img_path = Storage::put('posts-covers', $data['cover']);
             $data['cover'] = $img_path;
         }
 
