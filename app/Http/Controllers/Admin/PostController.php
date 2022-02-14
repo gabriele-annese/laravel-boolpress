@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 use App\Post;
 use App\Category;
@@ -50,6 +52,13 @@ class PostController extends Controller
        $request->validate($this->validation_rules(), $this->validation_messages() );
         
         $data = $request->all();
+
+        //add img
+        if(array_key_exists('cover', $data)){
+            //save img in storage & path db
+            $img_path = Storage::pu('posts-covers', $data['cover']);
+            $data['cover'] = $img_path;
+        }
 
         //new post
         $new_post = new Post();
@@ -180,6 +189,7 @@ class PostController extends Controller
             'content' => 'required|max:255',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
+            'cover' => 'nullable|mimes:jpeg,bmp,png',
         ];
     }
 

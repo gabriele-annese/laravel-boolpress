@@ -4,7 +4,7 @@
     <div class="container">
         <h1 class="mb-5">Create a new Post</h1>
 
-        <form action="{{route('admin.posts.store')}}" method="POST">
+        <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -62,6 +62,16 @@
                 @error('tags')
                      <div class="text-danger">{{ $message }}</div>  
                 @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="from-label" for="cover">Post Image</label>
+                <input class="form-control-file" type="file" name="cover" id="cover">
+
+                @error('cover')
+                     <div class="text-danger">{{ $message }}</div>  
+                @enderror
+                
             </div>
 
             <div>
